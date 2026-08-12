@@ -1,8 +1,8 @@
-
 import axios from 'axios';
 
 const API_URL =
-  import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000/api';
+  import.meta.env.VITE_API_URL ||
+  'https://hirehub-server-tdgt.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -42,4 +42,3 @@ api.interceptors.response.use(
 );
 
 export default api;
-
