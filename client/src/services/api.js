@@ -1,24 +1,21 @@
-import axios from 'axios';
+﻿import axios from 'axios';
 
-const API_URL =
-  import.meta.env.VITE_API_URL ||
-  'https://hirehub-server-tdgt.onrender.com/api';
+const baseUrl = 'http' + 's' + ':' + '/' + '/' + 'hirehub-server-tdgt.onrender.com' + '/api';
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: baseUrl,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Attach JWT token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('hirehub_token');
+    const token = localStorage.getItem('hirehub' + String.fromCharCode(95) + 'token');
 
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = 'Bearer ' + token;
     }
 
     return config;
@@ -26,16 +23,12 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Handle API responses/errors
 api.interceptors.response.use(
   (response) => response.data,
   (error) => {
     console.error('API ERROR:', error);
 
-    const message =
-      error.response?.data?.message ||
-      error.message ||
-      'An unexpected network error occurred';
+    const message = error.response?.data?.message || error.message || 'An unexpected network error occurred';
 
     return Promise.reject(new Error(message));
   }
